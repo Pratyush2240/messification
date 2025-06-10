@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mess_menu</title>
+    <link rel="stylesheet" href="mess_menu.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Today's Mess Menu</h1>
+        <div class="student-counter">
+            <h2>Number of Students Coming: <span id="student-count">0</span></h2>
+            <div class="counter-buttons">
+                <button onclick="updateStudentCount('increment')">+</button>
+                <button onclick="updateStudentCount('decrement')">-</button>
+            </div>
+        </div>
+        <table id="menu-table">
+            <thead>
+                <tr>
+                    <th>Dish Name</th>
+                    <th>Timings</th>
+                    <th>Price (₹)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+        <div class="add-dish">
+            <input type="text" id="new-dish-name" placeholder="Dish Name">
+            <input type="text" id="new-dish-timings" placeholder="Timings (e.g., 1-2 PM)">
+            <input type="number" id="new-dish-price" placeholder="Price">
+            <button onclick="addDish()">Add Dish</button>
+        </div>
+    </div>
+
+    <script>
+        let menu = [
+    { name: "Aloo Paratha", timings: "8-10 AM", price: 30 },
+    { name: "Rajma Chawal", timings: "1-3 PM", price: 50 },
+    { name: "Chole Bhature", timings: "8-10 AM", price: 45 },
+    { name: "Paneer Butter Masala", timings: "8-10 PM", price: 70 }
+];
+
+function renderMenu() {
+    const tableBody = document.querySelector('#menu-table tbody');
+    tableBody.innerHTML = '';
+    menu.forEach((dish, index) => {
+        const row = `
+            <tr data-index="${index}">
+                <td class="dish-name">${dish.name}</td>
+                <td class="dish-timings">${dish.timings}</td>
+                <td class="dish-price">${dish.price}</td>
+                <td class="action-buttons">
+                    <button class="edit-btn" onclick="editDish(this)">Edit</button>
+                    <button class="save-btn" onclick="saveDish(this)">Save</button>
+                    <button class="delete-btn" onclick="deleteDish(this)">Delete</button>
+                </td>
+            </tr>
+        `;
+        tableBody.innerHTML += row;
+    });
+}
+
+function addDish() {
+    const name = document.getElementById('new-dish-name').value;
+    const timings = document.getElementById('new-dish-timings').value;
+    const price = document.getElementById('new-dish-price').value;
+
+    if (name && timings && price) {
+        menu.push({ name, timings, price: parseFloat(price) });
+        saveMenu();
+        renderMenu();
+        document.getElementById('new-dish-name').value = '';
+        document.getElementById('new-dish-timings').value = '';
+        document.getElementById('new-dish-price').value = '';
+    } else {
+        alert('Please fill in all fields.');
+    }
+}
+
+function editDish(button) {
+    const row = button.closest('tr');
+    const nameCell = row.querySelector('.dish-name');
+    const timingsCell = row.querySelector('.dish-timings');
+    const priceCell = row.querySelector('.dish-price');
+
+    nameCell.contentEditable = true;
+    timingsCell.contentEditable = true;
+    priceCell.contentEditable = true;
+
+    nameCell.focus();
+    button.style.display = 'none';
+    row.querySelector('.save-btn').style.display = 'inline-block';
+}
+
+function saveDish(button) {
+    const row = button.closest('tr');
+    const index = row.dataset.index;
+    const nameCell = row.querySelector('.dish-name');
+    const timingsCell = row.querySelector('.dish-timings');
+    const priceCell = row.querySelector('.dish-price');
+
+    menu[index] = {
+        name: nameCell.innerText,
+        timings: timingsCell.innerText,
+        price: parseFloat(priceCell.innerText)
+    };
+
+    saveMenu();
+    nameCell.contentEditable = false;
+    timingsCell.contentEditable = false;
+    priceCell.contentEditable = false;
+
+    button.style.display = 'none';
+    row.querySelector('.edit-btn').style.display = 'inline-block';
+}
+
+function deleteDish(button) {
+    if (confirm('Are you sure you want to delete this dish?')) {
+        const row = button.closest('tr');
+        const index = row.dataset.index;
+        menu.splice(index, 1);
+        saveMenu();
+        renderMenu();
+    }
+}
+
+function updateStudentCount(action) {
+    const countElement = document.getElementById('student-count');
+    let count = parseInt(countElement.innerText);
+    if (action === 'increment') {
+        count++;
+    } else if (action === 'decrement' && count > 0) {
+        count--;
+    }
+    countElement.innerText = count;
+    saveStudentCount(count);
+}
+
+function saveMenu() {
+    localStorage.setItem('messMenu', JSON.stringify(menu));
+}
+
+function loadMenu() {
+    const savedMenu = localStorage.getItem('messMenu');
+    if (savedMenu) {
+        menu = JSON.parse(savedMenu);
+    }
+    renderMenu();
+}
+
+function saveStudentCount(count) {
+    localStorage.setItem('studentCount', count);
+}
+
+function loadStudentCount() {
+    const savedCount = localStorage.getItem('studentCount');
+    if (savedCount) {
+        document.getElementById('student-count').innerText = savedCount;
+    }
+}
+    </script>
+    
+</body>
+</html>
