@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Mess Menu</title>
+  <link rel="stylesheet" href="mess_menu.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Today's Mess Menu</h1>
+    <table id="menu-table">
+      <thead>
+        <tr>
+          <th>Dish Name</th>
+          <th>Timings</th>
+          <th>Price (₹)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    function loadMenuForStudents() {
+      const savedMenu = localStorage.getItem('messMenu');
+      if (savedMenu) {
+        const menu = JSON.parse(savedMenu);
+        const tableBody = document.querySelector('#menu-table tbody');
+        tableBody.innerHTML = '';
+        menu.forEach(dish => {
+          const row = `
+            <tr>
+              <td>${dish.name}</td>
+              <td>${dish.timings}</td>
+              <td>${dish.price}</td>
+            </tr>
+          `;
+          tableBody.innerHTML += row;
+        });
+      }
+    }
+
+    loadMenuForStudents();
+  </script>
+</body>
+</html>
