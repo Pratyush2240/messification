@@ -1,91 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="login.css">
-    <script src="https://kit.fontawesome.com/bdf467461b.js" crossorigin="anonymous"></script>
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="login.css" />
+  <script src="https://kit.fontawesome.com/bdf467461b.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <div id="userTypeScreen">
+  <div id="userTypeScreen">
     <div class="user-choice-box">
-        <h2>Who are you?</h2>
-        <button id="studentBtn">Student</button>
-        <button id="workerBtn">Mess Worker</button>
+      <h2>Who are you?</h2>
+      <button id="studentBtn">Student</button>
+      <button id="workerBtn">Mess Worker</button>
     </div>
-</div>
-    <div class="container" id="studentContainer" style="display: none;">
-        <div class="form-box">
-            <h1 id="title">Sign Up</h1>
-            <form>
-                <div class="input-group">
-                    <div class="input-field" id="nameField">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" placeholder="Name">
+  </div>
 
-                    </div>
+  <div class="container" id="studentContainer" style="display: none;">
+    <div class="form-box">
+      <h1 id="title">Sign Up</h1>
+      <form>
+        <div class="input-group">
+          <div class="input-field" id="nameField">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" placeholder="Name" />
+          </div>
 
-                    <div class="input-field">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" placeholder="Email">
+          <div class="input-field">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" placeholder="Email" />
+          </div>
 
-                    </div>
-                    
-                    <div class="input-field" id="collegeField">
-                        <i class="fa-solid fa-building-columns"></i>
-                        <label for="options"></label>
-                        <select id="options" name="options">
-                        <option value="option1">college A</option>
-                        <option value="option2">college B</option>
-                        <option value="option3">college C</option>
-                        </select>
-                    </div>
+          <div class="input-field" id="collegeField">
+            <i class="fa-solid fa-building-columns"></i>
+            <label for="options"></label>
+            <select id="options" name="options">
+              <option value="option1">college A</option>
+              <option value="option2">college B</option>
+              <option value="option3">college C</option>
+            </select>
+          </div>
 
-                    <div class="input-field">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Password">
-
-                    </div>
-                    <p>Lost password <a href="#">Click Here</a></p>
-                </div>
-                <div class="btn-field">
-                    <button type="button" id="signinBtn">Sign In</button>
-                    <button type="button" id="signupBtn" class="disable">Sign Up</button>
-               </form>
-                </div>
+          <div class="input-field">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" placeholder="Password" />
+          </div>
+          <p>Lost password? <a href="#">Click Here</a></p>
         </div>
 
-    </div>
+        <div class="btn-field">
+          <button type="button" id="signinBtn">Sign In</button>
+          <button type="button" id="signupBtn" class="disable">Sign Up</button>
+        </div>
+      </form>
 
-    <div class="container" id="workerContainer" style="display: none;">
+      <!-- 🔵 Google Sign-In Button -->
+      <div style="text-align: center; margin-top: 20px;">
+        <h3>Or</h3>
+        <button onclick="signInWithGoogle()" style="padding: 10px 20px;">Sign in with Google</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="workerContainer" style="display: none;">
     <div class="form-box">
-        <h1 id="workerTitle">Mess Worker Login</h1>
-        <form>
-            <div class="input-group">
-                <div class="input-field">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input type="email" placeholder="Email">
-                </div>
+      <h1 id="workerTitle">Mess Worker Login</h1>
+      <form>
+        <div class="input-group">
+          <div class="input-field">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" placeholder="Email" />
+          </div>
 
-                <div class="input-field">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" placeholder="Password">
-                </div>
-                <p>Lost password? <a href="#">Click Here</a></p>
-            </div>
-            <div class="btn-field">
-                <button type="button" id="workersigninBtn">Sign In</button>
-                <button type="button" class="disable">Sign Up</button>
-            </div>
-        </form>
+          <div class="input-field">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" placeholder="Password" />
+          </div>
+          <p>Lost password? <a href="#">Click Here</a></p>
+        </div>
+        <div class="btn-field">
+          <button type="button" id="workersigninBtn">Sign In</button>
+          <button type="button" class="disable">Sign Up</button>
+        </div>
+      </form>
     </div>
-</div>
+  </div>
 
-
-   <script>
+  <!-- 🔧 Your Custom Script -->
+  <script>
     let signupBtn = document.getElementById("signupBtn");
     let signinBtn = document.getElementById("signinBtn");
     let nameField = document.getElementById("nameField");
@@ -93,22 +96,21 @@
     let title = document.getElementById("title");
 
     signinBtn.onclick = function () {
-        nameField.style.maxHeight = "0";
-        collegeField.style.maxHeight = "0";
-        title.innerHTML = "Sign In";
-        signupBtn.classList.add("disable");
-        signinBtn.classList.remove("disable");
-    }
+      nameField.style.maxHeight = "0";
+      collegeField.style.maxHeight = "0";
+      title.innerHTML = "Sign In";
+      signupBtn.classList.add("disable");
+      signinBtn.classList.remove("disable");
+    };
 
     signupBtn.onclick = function () {
-        nameField.style.maxHeight = "60px";
-        collegeField.style.maxHeight = "60px";
-        title.innerHTML = "Sign Up";
-        signupBtn.classList.remove("disable");
-        signinBtn.classList.add("disable");
-    }
+      nameField.style.maxHeight = "60px";
+      collegeField.style.maxHeight = "60px";
+      title.innerHTML = "Sign Up";
+      signupBtn.classList.remove("disable");
+      signinBtn.classList.add("disable");
+    };
 
-    
     const userTypeScreen = document.getElementById("userTypeScreen");
     const studentBtn = document.getElementById("studentBtn");
     const workerBtn = document.getElementById("workerBtn");
@@ -116,30 +118,72 @@
     const studentContainer = document.getElementById("studentContainer");
     const workerContainer = document.getElementById("workerContainer");
 
-    
     formContainer.style.display = "none";
     studentContainer.style.display = "none";
     workerContainer.style.display = "none";
 
     studentBtn.onclick = function () {
-        userTypeScreen.style.display = "none";
-        formContainer.style.display = "block";
-        studentContainer.style.display = "block";
-        workerContainer.style.display = "none";
-    }
-
-    workerBtn.onclick = function () {
-        userTypeScreen.style.display = "none";
-        formContainer.style.display = "block"; 
-        studentContainer.style.display = "none";
-        workerContainer.style.display = "block";
-
-        document.getElementById("workersigninBtn").onclick = function () {
-    window.location.href = "mess_menu.html";
+      userTypeScreen.style.display = "none";
+      formContainer.style.display = "block";
+      studentContainer.style.display = "block";
+      workerContainer.style.display = "none";
     };
 
-    }
-</script>
+    workerBtn.onclick = function () {
+      userTypeScreen.style.display = "none";
+      formContainer.style.display = "block";
+      studentContainer.style.display = "none";
+      workerContainer.style.display = "block";
 
+      document.getElementById("workersigninBtn").onclick = function () {
+        window.location.href = "mess_menu.html";
+      };
+    };
+  </script>
+
+  <!-- 🔗 Firebase + Google Sign-In -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+    const firebaseConfig = {
+         apiKey: "AIzaSyDoQ4xRb4i2k5i3qQ1jRVuEj8vonhk9fUs",
+         authDomain: "messification-8789d.firebaseapp.com",
+         projectId: "messification-8789d", 
+        appId: "1:469610349546:web:76f8d2616a1986db672893",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    window.signInWithGoogle = async function () {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const token = await user.getIdToken();
+
+        await fetch("http://localhost:3000/store-token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            token: token,
+            email: user.email
+          })
+        });
+
+        alert("Signed in as " + user.displayName);
+      } catch (error) {
+        alert("Error: " + error.message);
+        console.error(error);
+      }
+    };
+  </script>
 </body>
 </html>
